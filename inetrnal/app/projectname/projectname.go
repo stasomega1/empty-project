@@ -49,10 +49,13 @@ func Start(config *Config) error {
 		return fmt.Errorf("configureLogger: %v", err)
 	}
 	//service
-	service := services.NewService(myStore, logger, config.Domain)
+	projectnameService := services.NewProjectnameServiceService(myStore, logger, config.Domain)
+	schedulerService := services.NewSchedulerService(myStore, logger, config.Domain)
 	//servers
-	srv := newServer(service, logger, config.ErrLevel)
+	srv := newServer(projectnameService, schedulerService, logger, config.ErrLevel)
 	healthServer := configureHealthServer(db)
+	//scheduler
+	go srv.SchedulerService.Start()
 
 	errgr := errgroup.Group{}
 	errgr.Go(func() error {

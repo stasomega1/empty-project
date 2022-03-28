@@ -12,7 +12,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&configPath, "configs-path", "./configs/projectname.toml", "Path to config files")
+	flag.StringVar(&configPath, "configs-path", "./configs/config.toml", "Path to config files")
 	flag.StringVar(&profileString, "profile", "local", "Profile where app runs, accept two options docker/local")
 }
 

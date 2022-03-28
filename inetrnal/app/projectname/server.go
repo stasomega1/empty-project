@@ -15,10 +15,11 @@ import (
 )
 
 type Server struct {
-	Router         *mux.Router
-	Logger         *logrus.Logger
-	ErrLevel       string
-	ProjectService services.ServiceI
+	Router             *mux.Router
+	Logger             *logrus.Logger
+	ErrLevel           string
+	ProjectnameService services.ProjectnameServiceI
+	SchedulerService   services.SchedulerServiceI
 }
 
 const (
@@ -26,12 +27,13 @@ const (
 	Normal = "normal"
 )
 
-func newServer(service services.ServiceI, logger *logrus.Logger, errLevel string) *Server {
+func newServer(projectnameService services.ProjectnameServiceI, schedulerService services.SchedulerServiceI, logger *logrus.Logger, errLevel string) *Server {
 	srv := &Server{
-		Router:         mux.NewRouter(),
-		Logger:         logger,
-		ProjectService: service,
-		ErrLevel:       errLevel,
+		Router:             mux.NewRouter(),
+		Logger:             logger,
+		ProjectnameService: projectnameService,
+		SchedulerService:   schedulerService,
+		ErrLevel:           errLevel,
 	}
 	srv.configureRouter()
 	return srv

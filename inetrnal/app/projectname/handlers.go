@@ -34,7 +34,7 @@ func (s *Server) handleGetSomeData() http.HandlerFunc {
 		}
 
 		//SERVICE CALL//
-		result, err := s.ProjectService.GetSomeData(request)
+		result, err := s.ProjectnameService.GetSomeData(request)
 		s.defaultResponse(w, result, err)
 	}
 }

@@ -1,41 +1,35 @@
 package services
 
 import (
-	"context"
 	"github.com/go-playground/validator/v10"
+	"github.com/sirupsen/logrus"
 	"project/inetrnal/app/model"
 	"project/inetrnal/app/store"
-	"time"
-
-	"github.com/sirupsen/logrus"
+	"project/inetrnal/app/utils"
 )
 
-type ServiceI interface {
+type ProjectnameServiceI interface {
 	GetSomeData(request model.DbModelRequest) (*model.DbModel, error)
 }
 
-type Service struct {
+type ProjectnameService struct {
 	domain string
-	store  *store.Store
+	store  store.StoreI
 	logger *logrus.Logger
 }
 
-func NewService(store *store.Store, logger *logrus.Logger, domain string) *Service {
-	return &Service{store: store, logger: logger, domain: domain}
+func NewProjectnameServiceService(store *store.Store, logger *logrus.Logger, domain string) *ProjectnameService {
+	return &ProjectnameService{store: store, logger: logger, domain: domain}
 }
 
-func getTimeoutContext(timeoutSec int) (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(timeoutSec)*time.Second)
-}
-
-func (s *Service) GetSomeData(request model.DbModelRequest) (*model.DbModel, error) {
+func (s *ProjectnameService) GetSomeData(request model.DbModelRequest) (*model.DbModel, error) {
 	validate := validator.New()
 	err := validate.Struct(request)
 	if err != nil {
 		return nil, model.NewError("Ошибка валидации запроса", 400, err.Error())
 	}
 
-	ctx, cancel := getTimeoutContext(10)
+	ctx, cancel := utils.GetTimeoutContext(10)
 	defer cancel()
 
 	result, err := s.store.SqlRepository().GetSomeDataFromDB(ctx, request.Parameter1, request.Parameter2)
