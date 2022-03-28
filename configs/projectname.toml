@@ -1,0 +1,39 @@
+app_port = 8081
+health_port = 8090
+log_level = "debug"
+err_level = "debug"
+domain = "https://ocrm-test.alfa-bank.kz"
+
+[DbConfig]
+host = "vserver908.alfa-bank.kz"
+port = 5444
+db_name = "ocrmdbtest"
+db_ssl_mode = "disable"
+db_username = "dsr_usr"
+db_password = "flki403#asdaK!"
+max_idle_con = 3
+max_open_con = 20
+
+[MqConfig]
+host = "vserver265.alfa-bank.kz"
+port = 5672
+user = "crm"
+pass = "CRMAlfabank1"
+vhost = "crm"
+
+[RedisConfig]
+host = "vserver265.alfa-bank.kz"
+port = 6379
+pass = "redis123"
+db = 0
+
+###################################################################################################
+[jwt]
+jwt_key = "alfa-ocrm-jwt-key"
+jwt_token_live = 30
+
+[filenet]
+host = "https://filenet-preprod.alfa-bank.kz/abea-service-1.0/rs/DocumentService/"
+username = "srv_filenet_ocrm"
+password = "Alfabank$2021"
+sitename = "ocrm"
